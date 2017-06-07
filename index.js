@@ -7,7 +7,8 @@ const dino = {
 
     addDino(ev){
         ev.preventDefault()
-        console.log('good')
+        const dinoName = ev.target.dinoName.value
+        console.log(dinoName)
     },
 }
 
