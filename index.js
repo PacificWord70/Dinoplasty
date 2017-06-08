@@ -8,6 +8,10 @@ const app = {
             .addEventListener('submit', this.addDino.bind(this))
     },
 
+    saveDinos(){
+        localStorage.setItem('dinos',JSON.stringify(this.dinos))
+    },
+
     addDino(ev){
         ev.preventDefault()
         
@@ -23,6 +27,7 @@ const app = {
         
             
         ev.target.dinoName.value = ''
+        app.saveDinos()
 
         document.querySelector('#star').style.backgroundColor='white'
 
@@ -45,20 +50,33 @@ const app = {
             this.style.backgroundColor='#EAFAF1'
             app.dinos[this.parentElement.querySelector('p').id-1].star=true
         }
+        app.saveDinos()
     },
 
     doRemove(){
         this.parentElement.remove(this.parentElement)
-        console.log((this.parentElement.querySelector('p').id)-1)
         delete app.dinos[(this.parentElement.querySelector('p').id)-1]
+        app.saveDinos()
     },
 
     doUp(){
-        console.log(this.parentElement)
+        app.dinos.splice((this.parentElement.querySelector('p').id)-1, 2, app.dinos[(this.parentElement.querySelector('p').id)], app.dinos[(this.parentElement.querySelector('p').id)-1]);
+        app.saveDinos()
+        const currentNode = app.max-(this.parentElement.querySelector('p').id)
+        const newItem = document.createElement('div')
+        newItem.innerHTML = this.parentElement
+        console.log(newItem)
+        console.log(app.list)
+        console.log(currentNode-1)
+        const parent = app.list.childNodes[currentNode-1]
+        this.parentElement.remove(this.parentElement)
+        this.parentElement.insertBefore(newItem,parent)
+        
     },
 
     doDown(){
 
+        app.saveDinos()
     },
 
     renderListItem(dino){
