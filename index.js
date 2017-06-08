@@ -3,9 +3,16 @@ const app = {
         this.max=0
         this.dinos=[]
         this.list = document.querySelector(selectors.listSelector)
+        //this.loadDinos()
         document
             .querySelector(selectors.formSelector)
             .addEventListener('submit', this.addDino.bind(this))
+    },
+
+    loadDinos(){
+        const JSONdinos = localStorage.getItem('dinos')
+        const dinoArray = JSON.parse(JSONdinos)
+        app.dinos = dinoArray
     },
 
     saveDinos(){
@@ -45,9 +52,11 @@ const app = {
         if(this.style.backgroundColor!='white')
         {
             this.style.backgroundColor='white'
+            this.textContent = 'Star'
             app.dinos[this.parentElement.querySelector('p').id-1].star=false
         } else {
             this.style.backgroundColor='#EAFAF1'
+            this.textContent = 'Starred'
             app.dinos[this.parentElement.querySelector('p').id-1].star=true
         }
         app.saveDinos()
@@ -75,7 +84,7 @@ const app = {
     },
 
     doDown(){
-
+        app.dinos.splice((this.parentElement.querySelector('p').id), 2, app.dinos[(this.parentElement.querySelector('p').id)-1], app.dinos[(this.parentElement.querySelector('p').id)]);
         app.saveDinos()
     },
 
