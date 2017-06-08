@@ -13,27 +13,46 @@ const app = {
         
         const dino = {
             name: ev.target.dinoName.value,
-            id: ++this.max
+            id: ++this.max,
+            star: false
         }
 
-        this.list.appendChild(this.renderListItem(dino))
-        this.dinos[this.max-1]=dino
-
+        const d = this.renderListItem(dino)
+        this.list.insertBefore(d,this.list.childNodes[0])
+        this.dinos.unshift(dino)
+        
             
         ev.target.dinoName.value = ''
+
+        document.querySelector('#star').style.backgroundColor='white'
+
+        document.querySelector('#star')
+            .addEventListener('click', app.doStar)
+        document.querySelector('#remove')
+            .addEventListener('click', app.doRemove)
+        document.querySelector('#up')
+            .addEventListener('click', app.doUp)
+        document.querySelector('#down')
+            .addEventListener('click', app.doDown)
     },
 
-    doStar(){
-        console.log(this)
-        this.style.backgroundColor='green'
+    doStar(ev){
+        if(this.style.backgroundColor!='white')
+        {
+            this.style.backgroundColor='white'
+            app.dinos[this.parentElement.querySelector('p').id-1].star=false
+        } else {
+            this.style.backgroundColor='#EAFAF1'
+            app.dinos[this.parentElement.querySelector('p').id-1].star=true
+        }
     },
 
     doRemove(){
-
+        this.parentElement.remove(this.parentElement)
     },
 
     doUp(){
-
+        console.log(this.parentElement)
     },
 
     doDown(){
@@ -44,7 +63,7 @@ const app = {
         const listItem = document.createElement('p')
         listItem.innerHTML = 
             `
-            <p><br />${dino.name}</p>
+                <p id="${dino.id}"><br />${dino.name}</p>
                 <button
                     type="click"
                     class="button success hollow" href="#"
@@ -74,7 +93,8 @@ const app = {
                     Down
                 </button>
             `
-        
+            
+
         return listItem
     }
 }
