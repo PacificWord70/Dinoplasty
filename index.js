@@ -19,7 +19,7 @@ const app = {
 
         const d = this.renderListItem(dino)
         this.list.insertBefore(d,this.list.childNodes[0])
-        this.dinos.unshift(dino)
+        this.dinos.push(dino)
         
             
         ev.target.dinoName.value = ''
@@ -49,6 +49,8 @@ const app = {
 
     doRemove(){
         this.parentElement.remove(this.parentElement)
+        console.log((this.parentElement.querySelector('p').id)-1)
+        delete app.dinos[(this.parentElement.querySelector('p').id)-1]
     },
 
     doUp(){
