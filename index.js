@@ -116,12 +116,14 @@ const app = {
     doUp(){
         app.dinos.splice((this.parentElement.querySelector('p').id)-1, 2, app.dinos[(this.parentElement.querySelector('p').id)], app.dinos[(this.parentElement.querySelector('p').id)-1]);
         app.saveDinos()
-        const currentNode = app.max-(this.parentElement.querySelector('p').id)
-        const newItem = document.createElement('div')
-        newItem.innerHTML = this.parentElement.innerHTML
-        const parent = app.list.childNodes[currentNode-1]
-        this.parentElement.remove(this.parentElement)
-        app.list.insertBefore(newItem,app.list.childNodes[currentNode-1])
+        //const currentNode = app.max-(this.parentElement.querySelector('p').id)
+        //const newItem = document.createElement('div')
+        //newItem.innerHTML = this.parentElement.innerHTML
+        //const parent = app.list.childNodes[currentNode-1]
+        //this.parentElement.remove(this.parentElement)
+        //app.list.insertBefore(newItem,app.list.childNodes[currentNode-1])
+
+        app.list.innerHTML=''
 
         app.init({
     formSelector: '#dino-form',
@@ -139,8 +141,9 @@ const app = {
         newItem.innerHTML = this.parentElement.innerHTML
         const parent = app.list.childNodes[currentNode-1]
         this.parentElement.remove(this.parentElement)
-        app.list.insertBefore(newItem,app.list.childNodes[currentNode+1])
-
+        //app.list.insertBefore(newItem,app.list.childNodes[currentNode+1])
+        app.list.innerHTML=''
+        
         app.init({
     formSelector: '#dino-form',
     listSelector: '#dino-list',
@@ -151,7 +154,7 @@ const app = {
         const listItem = document.createElement('p')
         listItem.innerHTML = 
             `
-                <p id="${dino.id}"><br />Breed: ${dino.breed}<br />Name: ${dino.name}<br />Age: ${dino.age}</p>
+                <p contentEditable = "true" id="${dino.id}"><br />Breed: ${dino.breed}<br />Name: ${dino.name}<br />Age: ${dino.age}</p>
                 <button
                     type="click"
                     class="button success hollow" href="#"
