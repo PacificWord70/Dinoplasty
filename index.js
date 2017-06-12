@@ -25,6 +25,8 @@ const app = {
         
         const dino = {
             name: ev.target.dinoName.value,
+            breed: ev.target.dinoBreed.value,
+            age: ev.target.dinoAge.value,
             id: ++this.max,
             star: false
         }
@@ -35,6 +37,8 @@ const app = {
         
             
         ev.target.dinoName.value = ''
+        ev.target.dinoBreed.value = ''
+        ev.target.dinoAge.value = ''
         app.saveDinos()
 
         document.querySelector('#star').style.backgroundColor='white'
@@ -100,7 +104,7 @@ const app = {
         const listItem = document.createElement('p')
         listItem.innerHTML = 
             `
-                <p id="${dino.id}"><br />${dino.name}</p>
+                <p id="${dino.id}"><br />Breed: ${dino.breed}<br />Name: ${dino.name}<br />Age: ${dino.age}</p>
                 <button
                     type="click"
                     class="button success hollow" href="#"
