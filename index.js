@@ -1,9 +1,10 @@
 const app = {
     init(selectors){
-        this.max=0
         this.dinos=[]
+        if(localStorage.dinos!=''){app.loadDinos()}
+        if(localStorage.dinos!=''){this.max=app.dinos.length}
+        else {this.max=0}
         this.list = document.querySelector(selectors.listSelector)
-        //this.loadDinos()
         document
             .querySelector(selectors.formSelector)
             .addEventListener('submit', this.addDino.bind(this))
@@ -78,14 +79,21 @@ const app = {
         console.log(app.list)
         console.log(currentNode-1)
         const parent = app.list.childNodes[currentNode-1]
-        this.parentElement.remove(this.parentElement)
-        this.parentElement.insertBefore(newItem,parent)
-        
+        //this.parentElement.remove(this.parentElement)
+        //this.parentElement.insertBefore(newItem,parent)
+        app.init({
+            formSelector: '#dino-form',
+            listSelector: '#dino-list',
+        })   
     },
 
     doDown(){
         app.dinos.splice((this.parentElement.querySelector('p').id), 2, app.dinos[(this.parentElement.querySelector('p').id)-1], app.dinos[(this.parentElement.querySelector('p').id)]);
         app.saveDinos()
+        app.init({
+            formSelector: '#dino-form',
+            listSelector: '#dino-list',
+        }) 
     },
 
     renderListItem(dino){
