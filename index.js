@@ -78,26 +78,24 @@ const app = {
         app.saveDinos()
         const currentNode = app.max-(this.parentElement.querySelector('p').id)
         const newItem = document.createElement('div')
-        newItem.innerHTML = this.parentElement
-        console.log(newItem)
-        console.log(app.list)
-        console.log(currentNode-1)
+        newItem.innerHTML = this.parentElement.innerHTML
         const parent = app.list.childNodes[currentNode-1]
-        //this.parentElement.remove(this.parentElement)
-        //this.parentElement.insertBefore(newItem,parent)
-        app.init({
-            formSelector: '#dino-form',
-            listSelector: '#dino-list',
-        })   
+        this.parentElement.remove(this.parentElement)
+        app.list.insertBefore(newItem,app.list.childNodes[currentNode-1])
+          
     },
 
     doDown(){
-        app.dinos.splice((this.parentElement.querySelector('p').id), 2, app.dinos[(this.parentElement.querySelector('p').id)-1], app.dinos[(this.parentElement.querySelector('p').id)]);
+        const currentNode = app.max-(this.parentElement.querySelector('p').id)
+        const currentThing = app.list.childNodes[currentNode]
+        const nextThing = app.list.childNodes[currentNode+1]
+        app.dinos.splice(currentNode-2, 2, app.dinos[(this.parentElement.querySelector('p').id)-1], app.dinos[(this.parentElement.querySelector('p').id)-2]);
         app.saveDinos()
-        app.init({
-            formSelector: '#dino-form',
-            listSelector: '#dino-list',
-        }) 
+        const newItem = document.createElement('div')
+        newItem.innerHTML = this.parentElement.innerHTML
+        const parent = app.list.childNodes[currentNode-1]
+        this.parentElement.remove(this.parentElement)
+        app.list.insertBefore(newItem,app.list.childNodes[currentNode+1])
     },
 
     renderListItem(dino){
