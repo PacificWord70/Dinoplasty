@@ -1,10 +1,16 @@
 const app = {
     init(selectors){
         this.dinos=[]
-        if(localStorage.dinos!=''){app.loadDinos()}
-        if(localStorage.dinos!=''){this.max=app.dinos.length}
-        else {this.max=0}
+        this.max = 0
         this.list = document.querySelector(selectors.listSelector)
+        
+        if(localStorage.dinos!='')
+        {
+            app.loadDinos()
+            console.log(this.max)
+            app.addOldDinos(this.dinos,this.max)
+            console.log(this.max)
+        }
         document
             .querySelector(selectors.formSelector)
             .addEventListener('submit', this.addDino.bind(this))
@@ -14,10 +20,47 @@ const app = {
         const JSONdinos = localStorage.getItem('dinos')
         const dinoArray = JSON.parse(JSONdinos)
         app.dinos = dinoArray
+        console.log(dinoArray)
+        console.log(app.max)
+        this.max = dinoArray.length
     },
 
     saveDinos(){
         localStorage.setItem('dinos',JSON.stringify(this.dinos))
+    },
+
+    addOldDinos(dA,num){
+        let i =0
+        for(i;i<num;i++)
+        {
+            console.log(dA[i])
+        const dino = {
+            name: dA[i].name,
+            breed: dA[i].breed,
+            age: dA[i].age,
+            id: dA[i].id,
+            star: dA[i].star
+        }
+
+        const d = app.renderListItem(dino)
+        console.log(app.list.childNodes[0])
+        console.log(app.list)
+        app.list.insertBefore(d,app.list.childNodes[0])
+        console.log(d)
+        console.log(app.list.childNodes[0])
+        console.log(dino)
+
+        document.querySelector('#star').style.backgroundColor='white'
+
+        document.querySelector('#star')
+            .addEventListener('click', app.doStar)
+        document.querySelector('#remove')
+            .addEventListener('click', app.doRemove)
+        document.querySelector('#up')
+            .addEventListener('click', app.doUp)
+        document.querySelector('#down')
+            .addEventListener('click', app.doDown)
+        }
     },
 
     addDino(ev){
@@ -51,6 +94,8 @@ const app = {
             .addEventListener('click', app.doUp)
         document.querySelector('#down')
             .addEventListener('click', app.doDown)
+
+        if(dino.star!=false){app.doStar}
     },
 
     doStar(ev){
@@ -82,7 +127,11 @@ const app = {
         const parent = app.list.childNodes[currentNode-1]
         this.parentElement.remove(this.parentElement)
         app.list.insertBefore(newItem,app.list.childNodes[currentNode-1])
-          
+
+        app.init({
+    formSelector: '#dino-form',
+    listSelector: '#dino-list',
+})
     },
 
     doDown(){
@@ -96,6 +145,11 @@ const app = {
         const parent = app.list.childNodes[currentNode-1]
         this.parentElement.remove(this.parentElement)
         app.list.insertBefore(newItem,app.list.childNodes[currentNode+1])
+
+        app.init({
+    formSelector: '#dino-form',
+    listSelector: '#dino-list',
+})
     },
 
     renderListItem(dino){
